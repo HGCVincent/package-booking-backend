@@ -2,10 +2,14 @@ package com.oocl.packagebooking.Service;
 
 import com.oocl.packagebooking.Repository.ParcelRespository;
 import com.oocl.packagebooking.model.Parcel;
+import org.json.JSONException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+import org.json.JSONArray;
 
 @Service
 public class ParcelServiceImpl implements ParcelService {
@@ -29,8 +33,9 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    public Parcel updateParcel(Parcel parcel) {
+    public Parcel updateParcel(int id){
+        Parcel parcel = parcelRespository.getById(id);
+        parcel.setStatus("已取件");
         return parcelRespository.save(parcel);
     }
-
 }

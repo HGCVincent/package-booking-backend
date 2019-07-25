@@ -29,9 +29,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(PracelController.class)
-public class PracelController {
+public class PracelControllerTest {
     @Autowired
     MockMvc mvc;
+
+    @Autowired
+    private ObjectMapper mapper;
     
     @MockBean
     ParcelService parcelService;
@@ -39,53 +42,42 @@ public class PracelController {
     @Test
     public void should_get_all_pracel_info() throws Exception {
         Parcel parcel = new Parcel();
-        parcel.setId(1234565132);
         parcel.setPhoneNumber("12378914561245");
         parcel.setRecipient("陈先生");
         parcel.setStatus("未取件");
+        parcel.setWaybillNumber("123465456");
 
         List<Parcel> parcels = new ArrayList<>();
         parcels.add(parcel);
 
-        String ParcelJson = "{\n" +
-                "\"id\": 1234565132,\n" +
-                "\"phonenumber\": \"12378914561245\",\n" +
-                "\"recipient\": \"陈先生\"\n" +
-                "}";
-
         when(parcelService.getAllParcel()).thenReturn(parcels);
 
-        mvc.perform(post("/parcels").contentType(MediaType.APPLICATION_JSON).content(ParcelJson));
+        mvc.perform(post("/parcels").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(parcel)));
 
         ResultActions result = mvc.perform(get("/parcels"));
 
-        result.andExpect(status().isOk()).andExpect((ResultMatcher) jsonPath("$.recipient",is("陈先生")));
+        result.andExpect(status().isOk()).andExpect((ResultMatcher) jsonPath("$[0].recipient",is("陈先生")));
+
+        verify(parcelService).getAllParcel();
     }
 
     @Test
     public void should_get_pracel_by_status() throws Exception {
         Parcel parcel = new Parcel();
-        parcel.setId(1234565132);
+        parcel.setWaybillNumber("21324546");
         parcel.setPhoneNumber("12378914561245");
         parcel.setRecipient("陈先生");
         parcel.setStatus("未取件");
 
-        List<Parcel> parcels = new ArrayList<>();
-        parcels.add(parcel);
+        when(parcelService.getParcelByName(any())).thenReturn(parcel);
 
-        String ParcelJson = "{\n" +
-                "\"id\": 1234565132,\n" +
-                "\"phonenumber\": \"12378914561245\",\n" +
-                "\"recipient\": \"陈先生\"\n" +
-                "}";
-
-        when(parcelService.getAllParcel()).thenReturn(parcels);
-
-        mvc.perform(post("/parcels").contentType(MediaType.APPLICATION_JSON).content(ParcelJson));
+        mvc.perform(post("/parcels").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(parcel)));
 
         ResultActions result = mvc.perform(get("/parcels/{status}","未取件"));
 
         result.andExpect(status().isOk()).andExpect((ResultMatcher) jsonPath("$.recipient",is("陈先生")));
+
+        verify(parcelService).getParcelByName(any());
     }
 
     @Test

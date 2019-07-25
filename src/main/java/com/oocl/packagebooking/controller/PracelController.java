@@ -2,13 +2,13 @@ package com.oocl.packagebooking.controller;
 
 import com.oocl.packagebooking.Service.ParcelService;
 import com.oocl.packagebooking.model.Parcel;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class PracelController {
     @Autowired
     ParcelService parcelService;
@@ -28,9 +28,9 @@ public class PracelController {
         return parcelService.addParcel(parcel);
     }
 
-    @PutMapping("/parcels")
-    public Parcel updateParcel(@RequestBody Parcel parcel){
-        return parcelService.updateParcel(parcel);
+    @PatchMapping("/parcels/{id}")
+    public Parcel updateParcel(@PathVariable int id){
+        return parcelService.updateParcel(id);
     }
 
 }

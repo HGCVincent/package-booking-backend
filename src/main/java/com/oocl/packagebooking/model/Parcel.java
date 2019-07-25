@@ -1,17 +1,21 @@
 package com.oocl.packagebooking.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "parcel")
+@Table
 public class Parcel {
+    @Id
+    @GeneratedValue
     private int id;
+
     private String recipient;
     private String phoneNumber;
     private String status;
     private Timestamp time;
+    private Double weight;
+    private String waybillNumber;
 
     public Parcel() {
     }
@@ -54,5 +58,21 @@ public class Parcel {
 
     public void setTime(Timestamp time) {
         this.time = time;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public String getWaybillNumber() {
+        return waybillNumber;
+    }
+
+    public void setWaybillNumber(String waybillNumber) {
+        this.waybillNumber = waybillNumber;
     }
 }
