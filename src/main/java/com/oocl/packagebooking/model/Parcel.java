@@ -1,9 +1,11 @@
 package com.oocl.packagebooking.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 
 @Entity
+@Table(name = "parcel")
 public class Parcel {
     private int id;
     private String recipient;

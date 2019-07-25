@@ -8,4 +8,6 @@ public interface ParcelService {
     List<Parcel> getAllParcel();
 
     Parcel getParcelByName(String status);
+
+    Parcel addParcel(Parcel parcel);
 }

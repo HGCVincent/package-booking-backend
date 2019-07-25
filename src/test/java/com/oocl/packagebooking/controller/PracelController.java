@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -84,5 +86,27 @@ public class PracelController {
         ResultActions result = mvc.perform(get("/parcels/{status}","未取件"));
 
         result.andExpect(status().isOk()).andExpect((ResultMatcher) jsonPath("$.recipient",is("陈先生")));
+    }
+
+    @Test
+    public void should_add_parcel() throws Exception {
+        Parcel parcel =new Parcel();
+        parcel.setId(1234565132);
+        parcel.setPhoneNumber("12378914561245");
+        parcel.setRecipient("陈先生");
+        parcel.setStatus("未取件");
+
+        String ParcelJson = "{\n" +
+                "\"id\": 1234565132,\n" +
+                "\"phonenumber\": \"12378914561245\",\n" +
+                "\"recipient\": \"陈先生\"\n" +
+                "}";
+
+        when(parcelService.addParcel(any())).thenReturn(parcel);
+        ResultActions result = mvc.perform(post("/parcels").contentType(MediaType.APPLICATION_JSON).content(ParcelJson));
+
+        result.andExpect(status().isOk()).andExpect((ResultMatcher) jsonPath("$.recipient",is("陈先生")));
+
+        verify(parcelService).addParcel(any());
     }
 }

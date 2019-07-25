@@ -22,4 +22,10 @@ public class PracelController {
     public Parcel getParcelByStatus(@PathVariable String status){
         return parcelService.getParcelByName(status);
     }
+
+    @PostMapping("/parcels")
+    public Parcel addParcel(@RequestBody Parcel parcel){
+        return parcelService.addParcel(parcel);
+    }
+
 }
