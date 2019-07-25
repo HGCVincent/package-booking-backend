@@ -18,4 +18,8 @@ public class PracelController {
         return parcelService.getAllParcel();
     }
 
+    @GetMapping("/parcels/{status}")
+    public Parcel getParcelByStatus(@PathVariable String status){
+        return parcelService.getParcelByName(status);
+    }
 }

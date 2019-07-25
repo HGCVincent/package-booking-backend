@@ -19,7 +19,8 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    public Parcel addParcel(Parcel parcel) {
-        return parcelRespository.save(parcel);
+    public Parcel getParcelByName(String status) {
+        return parcelRespository.getByStatus(status);
     }
+
 }

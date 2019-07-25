@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 @Entity
 public class Parcel {
-    private long id;
+    private int id;
     private String recipient;
     private String phoneNumber;
     private String status;
@@ -14,19 +14,11 @@ public class Parcel {
     public Parcel() {
     }
 
-    public Parcel(long id, String recipient, String phoneNumber, String status, Timestamp time) {
-        this.id = id;
-        this.recipient = recipient;
-        this.phoneNumber = phoneNumber;
-        this.status = status;
-        this.time = time;
-    }
-
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

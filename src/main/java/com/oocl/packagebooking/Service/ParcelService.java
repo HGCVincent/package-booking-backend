@@ -7,5 +7,5 @@ import java.util.List;
 public interface ParcelService {
     List<Parcel> getAllParcel();
 
-    Parcel addParcel(Parcel parcel);
+    Parcel getParcelByName(String status);
 }
