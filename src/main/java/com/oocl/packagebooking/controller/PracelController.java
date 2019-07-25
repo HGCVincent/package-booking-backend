@@ -28,4 +28,9 @@ public class PracelController {
         return parcelService.addParcel(parcel);
     }
 
+    @PutMapping("/parcels")
+    public Parcel updateParcel(@RequestBody Parcel parcel){
+        return parcelService.updateParcel(parcel);
+    }
+
 }

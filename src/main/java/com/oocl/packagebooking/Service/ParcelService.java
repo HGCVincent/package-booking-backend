@@ -10,4 +10,6 @@ public interface ParcelService {
     Parcel getParcelByName(String status);
 
     Parcel addParcel(Parcel parcel);
+
+    Parcel updateParcel(Parcel parcel);
 }
